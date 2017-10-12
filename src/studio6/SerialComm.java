@@ -27,10 +27,44 @@ public class SerialComm {
 	}
 		
 	// TODO: Add writeByte() method from Studio 5
+	void writeByte(byte num){
+		try {
+			port.writeByte(num);
+		} catch (SerialPortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			} 
+		if (debug){
+		System.out.println(num);
+		}
+}
 	
 	// TODO: Add available() method
+	boolean available() throws SerialPortException{
+		boolean b = false;
+		if (port.getInputBufferBytesCount() !=0){
+			b = true;
+		} else{
+			b = false;
+		}
+		return b; 
+	}
 	
 	// TODO: Add readByte() method	
+	byte readByte() throws SerialPortException{
+		byte[] a = port.readBytes(1);
+		byte b = a[0];
+		return b;
+		
+	}
 	
 	// TODO: Add a main() method
+	static void main() throws SerialPortException{
+		SerialComm port = new SerialComm("/dev/cu.usbserial-DN02ZB69");
+		while(true){
+			if (port.available()){
+				System.out.println(port.readByte());
+			}
+		}
+	}
 }
