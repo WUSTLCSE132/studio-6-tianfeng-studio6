@@ -54,16 +54,21 @@ public class SerialComm {
 	byte readByte() throws SerialPortException{
 		byte[] a = port.readBytes(1);
 		byte b = a[0];
+		if (debug){
+			String hex = String.format("%02x", b);
+			System.out.println(hex);
+		}
 		return b;
 		
 	}
 	
 	// TODO: Add a main() method
-	static void main() throws SerialPortException{
-		SerialComm port = new SerialComm("/dev/cu.usbserial-DN02ZB69");
+	public static void main(String[] args) throws SerialPortException{
+		SerialComm port = new SerialComm("/dev/cu.usbserial-DN02B0FY");
 		while(true){
 			if (port.available()){
-				System.out.println(port.readByte());
+				byte decimal = port.readByte();
+			
 			}
 		}
 	}
